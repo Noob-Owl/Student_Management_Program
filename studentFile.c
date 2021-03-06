@@ -1,6 +1,6 @@
 #include<stdio.h>
-#include<stdbool.h>
 #include<stdint.h>
+
 #include "studentListOperations.h"
 /*
 One students occupies 52 byte in file
@@ -9,43 +9,52 @@ ID = 3byte, name = 30byte, home = 15byte, score = 4
 
 int main()
 {
-    int order;
     uint8_t choice;
-    bool ask = 0;
-    bool repeat = 0;
-
-    FILE* fp = fopen(SOURCE, "r+");
+    int ask = 0;
+    int repeat = 0;
+    //char source[50];
+    
+    printf ("\nSTUDENT MANAGEMENT PROGRAM\n\n");
+    
+    FILE* fp = fopen(SOURCE, "r");
 
     if (fp == NULL)
     {
         printf ("ERROR WITH FILE.\n");
+        printf ("CREATING FILE...\n");
+        //fclose (fp);
+        FILE* fp = fopen(SOURCE, "w");
+        fclose(fp);
+        printf ("\nFILE CREATED.\n\n");
     }
-
-    printf ("STUDENT MANAGEMENT PROGRAM\n");
+    
     do 
     {   
-        
         repeat = 0;
-        printf ("Please select your option:\n1. Printf Students' list\n2. Add Students\n");
+        printf ("\nPlease select your option:\n1. Printf Students' list\n2. Add Students\n");
         scanf ("%hhd", &choice);
         switch(choice)
         {
             case 1:
-                if (checkEmpty(fp) == 1)
+                
+                if (checkEmpty() == 1)
                 {
-                    printf ("File is empty.\n");
+                    printf ("\n!File is empty!\nPlease add contents to the file\n\n");
+                    getchar();
                 }
-                else if (checkEmpty(fp) == 0)
+                else if (checkEmpty() == 0)
                 {
+                    printf ("\nCLASS LIST\n\n");
                     printf ("%-3s%-30s%-15s%4s\n", COL1, COL2, COL3, COL4);
-                    printList(fp);
+                    printList();
                 }
+                
             break;
             case 2:
-                addStudent(fp);
+                addStudent();
             break;
         }
-        printf ("Do you want to continue?\n1. Yes\n0. No\n");
+        printf ("\n\nDo you want to continue or exit the program?\n1. Continue\n0. Exit\nYour choice: ");
         scanf("%d", &ask);
         if (ask == 1)
         {
@@ -53,7 +62,8 @@ int main()
         }
     }
     while(repeat == 1);
-    fclose(fp);
+    //fclose(fp);
     return 0;
 }
+
 
