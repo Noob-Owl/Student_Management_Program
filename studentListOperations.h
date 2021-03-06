@@ -18,11 +18,11 @@ struct classList
     char name[NAME_LEN];
     char home[HOME_LEN];
     float score;
-}student;
+}student[MAX_STUDENTS];
 
-int checkEmpty(FILE* filePtr);
-void printList(FILE* filePtr);
-void addStudent(FILE* filePtr);
+int checkEmpty();
+void printList();
+void addStudent();
 
 
 #endif
